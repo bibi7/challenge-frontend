@@ -4,17 +4,17 @@
       <div class="left query-input">
         <span>交易日期：</span>
         <div class="date-input" id="date-input">
-          <div @mouseenter="enterIn(0)" @mouseleave="leaveOut(0)">
-            <!--此处曾考虑用v-model，但在触发mouseenter时会导致input内容为空，暂未找到方法，导致X图标消失只能先用setInterval比较笨的方法替代-->
+          <div>
             <input type="text" id="input-from" @blur="startInterval(0)">
             <i class="cancel" @click="cancelValue('input-from')" :class="cancelFirst.isShow ? 'active' : ''"></i>
-            <i class="triangle" :class="triangleFirst.isShow ? 'active' : ''"></i>
+            <i class="triangle"></i>
           </div>
           <span>至</span>
-          <div @mouseenter="enterIn(1)" @mouseleave="leaveOut(1)">
+          <div>
             <input type="text" id="input-to" @blur="startInterval(1)">
-            <i class="cancel" @click="cancelValue('input-to')" :class="cancelSecond.isShow ? 'active' : ''"></i>
-            <i class="triangle" :class="triangleSecond.isShow ? 'active' : ''"></i>
+            <i class="cancel" @click="cancelValue('input-to')"
+              :class="cancelSecond.isShow ? 'active' : ''"></i>
+            <i class="triangle"></i>
           </div>
         </div>
       </div>
@@ -32,18 +32,13 @@
 <script>
   import overall from './overall.vue'
   import detail from './detail.vue'
-//  import {eve} from '../../static/js/uitls'
 
   export default {
     name: 'main-part',
     data () {
       return {
-        triangleFirst: {
-          isShow: false
-        },
-        triangleSecond: {
-          isShow: false
-        },
+        dataFrom: '',
+        dataTo: '',
         cancelFirst: {
           isShow: false
         },
@@ -57,55 +52,37 @@
       'detail': detail
     },
     methods: {
+      cancelValue: function (id) {
+        document.getElementById(id).value = '';
+        if (id = 'input-from') {
+          this.dataFrom = '';
+          this.cancelFirst.isShow = false;
+        }
+        if (id = 'input-to') {
+          this.dataTo = ''
+          this.cancelSecond.isShow = false;
+        }
+      },
       startInterval: function (num) {
         switch (num) {
           case 0:
             setInterval(() => {
               console.log(document.getElementById('input-from').value);
-              if (document.getElementById('input-from').value !== '') {
-                this.cancelFirst.isShow = true;
-              }
-            },100);
-            break;
-          case 1:
-            setInterval(() => {
-              console.log(document.getElementById('input-from').value);
-              if (document.getElementById('input-to').value !== '') {
-                this.cancelSecond.isShow = true;
-              }
-            },100);
-            break;
-        }
-      },
-      cancelValue: function (id) {
-        document.getElementById(id).value = '';
-        if (id = 'input-from') {
-          this.cancelFirst.isShow = false;
-        }
-        if (id = 'input-to') {
-          this.cancelSecond.isShow = false
-        }
-      },
-      enterIn: function (num) {
-        switch (num) {
-          case 0:
-            this.triangleFirst.isShow = true;
-            break;
-          case 1:
-            this.triangleSecond.isShow = true;
-            break;
-        }
-      },
-      leaveOut: function (num) {
-        switch (num) {
-          case 0:
-            this.triangleFirst.isShow = false;
-            break;
-          case 1:
-            this.triangleSecond.isShow = false;
-            break;
-        }
-      },
+             if (document.getElementById('input-from').value !== '') {
+               this.cancelFirst.isShow = true;
+             }
+           },100);
+           break;
+         case 1:
+           setInterval(() => {
+             console.log(document.getElementById('input-from').value);
+             if (document.getElementById('input-to').value !== '') {
+               this.cancelSecond.isShow = true;
+             }
+           },100);
+           break;
+       }
+     },
       check: function () {
         const inputFrom = document.getElementById('input-from').value;
         const inputTo = document.getElementById('input-to').value;
@@ -166,5 +143,4 @@
       }
     }
   }
-
 </script>

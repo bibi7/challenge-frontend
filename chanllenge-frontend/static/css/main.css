@@ -70,6 +70,9 @@
     display: inline-block;
 }
 
+.date-input > div:hover .triangle {
+    display: block;
+}
 .cancel {
     display: none;
     position: absolute;
@@ -96,10 +99,6 @@
     background: url("../img/triangle.png") no-repeat center;
     background-size: 100%;
     cursor: pointer;
-}
-
-.triangle.active {
-  display: block;
 }
 
 .date-input span {

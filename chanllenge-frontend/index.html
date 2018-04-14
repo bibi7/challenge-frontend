@@ -14,8 +14,12 @@
   <script src="./static/js/laydate/laydate.js"></script>
   <script src="./static/js/uitls.js"></script>
   <script>
+
     laydate.render({
-      elem: '#input-from'
+      elem: '#input-from',
+      done: function (value) {
+        document.getElementById('input-from').value = value;
+      }
     });
 
     laydate.render({
