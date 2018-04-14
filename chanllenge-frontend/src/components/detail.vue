@@ -356,9 +356,6 @@ export default {
   methods: {
     clickToCheck: (index, item) => {
       item.isShow = !item.isShow;
-    },
-    changeTable: function () {
-
     }
   }
 }
