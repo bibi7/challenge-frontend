@@ -45,17 +45,23 @@ Main
 - Use **React**/**Vue**/**Angular**.
 - No futher limits, use any library you want.
 
-### Bonus
 
-- Write clear **documentation** how to run the code.
-- An online demo is always welcome.
+### install npm
 
-## Q&A
+``` bash
+# install dependencies
+npm install
 
-> Where should I send back the result when I'm done?
+```
 
-Fork this repo and send us a **pull request** when you think you are done.
+### how to run the code?
+```
+#first
+   cd chanllenge-frontend
 
-> What if I have a question?
+#then 
+   npm run dev
 
-Create a new issue in the repo and we will get back to you very quickly.
+
+#and then you can visit in localhost:8080
+```
