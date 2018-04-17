@@ -51,7 +51,7 @@
             <table class="inner-table">
             <tr>
               <td>
-                <span>{{item.shopNmae}}</span>
+                <span>{{item.shopName}}</span>
               </td>
               <td>
                 <span>{{item.tradeTime}}</span>
@@ -137,12 +137,19 @@
 
 <script>
 export default {
-  name: 'detail-card',
+  name: 'detail',
+  props: {
+    todo: {
+      type: String,
+      default: 1
+    }
+  },
   data () {
     return {
+      fromD: this.todo,
       detail: [{
         isShow: false,
-        shopNmae: '港汇店',
+        shopName: '港汇店',
         tradeTime: '2017-01-05',
         typeOfPayment: '全部',
         singleTradeNumber: 120,
@@ -212,7 +219,7 @@ export default {
         }]
       },{
         isShow: false,
-        shopNmae: '虹桥',
+        shopName: '虹桥',
         tradeTime: '2017-01-06',
         typeOfPayment: '全部',
         singleTradeNumber: 120,
@@ -282,7 +289,7 @@ export default {
         }]
       },{
         isShow: false,
-        shopNmae: '浦东店',
+        shopName: '浦东店',
         tradeTime: '2017-01-07',
         typeOfPayment: '全部',
         singleTradeNumber: 120,
@@ -354,8 +361,9 @@ export default {
     }
   },
   methods: {
-    clickToCheck: (index, item) => {
+    clickToCheck: function (index, item) {
       item.isShow = !item.isShow;
+      console.log(this.fromD)
     }
   }
 }

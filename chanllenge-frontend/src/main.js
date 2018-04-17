@@ -16,7 +16,6 @@ Vue.filter('toFixed', function (value) {
 
 new Vue({
   el: '#app',
-  router,
   components: { App },
   template: '<App/>'
 });

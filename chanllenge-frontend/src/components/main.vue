@@ -24,7 +24,7 @@
       </div>
     </div>
     <overall></overall>
-    <detail></detail>
+    <detail :todo="dataFrom"></detail>
   </div>
 </template>
 
@@ -37,7 +37,7 @@
     name: 'main-part',
     data () {
       return {
-        dataFrom: '',
+        dataFrom: '123',
         dataTo: '',
         cancelFirst: {
           isShow: false
@@ -48,8 +48,8 @@
       }
     },
     components: {
-      'overall': overall,
-      'detail': detail
+      overall,
+      detail
     },
     methods: {
       cancelValue: function (id) {
@@ -59,7 +59,7 @@
           this.cancelFirst.isShow = false;
         }
         if (id = 'input-to') {
-          this.dataTo = ''
+          this.dataTo = '';
           this.cancelSecond.isShow = false;
         }
       },
