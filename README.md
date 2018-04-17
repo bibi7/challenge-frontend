@@ -60,7 +60,7 @@ npm install
    cd chanllenge-frontend
 
 #then 
-   npm run dev
+   npm run dev 
 
 
 #and then you can visit in localhost:8080
