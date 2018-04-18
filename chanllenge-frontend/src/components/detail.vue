@@ -124,7 +124,7 @@
               <td>
                 <span>{{innerItem.moreAmountOfLiquidation | toFixed}}</span>
               </td>
-              <td></td>
+              <td>{{fromD}}{{fromE}}</td>
             </tr>
           </table>
           </div>
@@ -139,13 +139,17 @@
 export default {
   name: 'detail',
   props: {
-    todo: {
+    fromTime: {
+      type: String
+    },
+    endTime: {
       type: String
     }
   },
   data () {
     return {
-      fromD: this.todo,
+      fromD: this.fromTime,
+      fromE: this.endTime,
       detail: [{
         isShow: false,
         shopName: '港汇店',

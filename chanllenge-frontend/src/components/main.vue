@@ -5,15 +5,15 @@
         <span>交易日期：</span>
         <div class="date-input" id="date-input">
           <div>
-            <input type="text" id="input-from" @blur="startInterval(0)">
-            <i class="cancel" @click="cancelValue('input-from')" :class="cancelFirst.isShow ? 'active' : ''"></i>
+            <!--暂不使用v-model来双向绑定，原因是因为在时间选择器插件更改input之后v-model并不会一起更新-->
+            <input type="text" id="input-from" @blur="startTimeout(0)">
+            <i class="cancel" @click="cancelValue('input-from')" v-if="dataFrom"></i>
             <i class="triangle"></i>
           </div>
           <span>至</span>
           <div>
-            <input type="text" id="input-to" @blur="startInterval(1)">
-            <i class="cancel" @click="cancelValue('input-to')"
-              :class="cancelSecond.isShow ? 'active' : ''"></i>
+            <input type="text" id="input-to" @blur="startTimeout(1)">
+            <i class="cancel" @click="cancelValue('input-to')" v-if="dataTo"></i>
             <i class="triangle"></i>
           </div>
         </div>
@@ -24,12 +24,13 @@
       </div>
     </div>
     <overall></overall>
-    <detail :todo="dataFrom"></detail>
+    <detail :fromTime="dataFrom" :endTime="dataTo"></detail>
   </div>
 </template>
 
 
 <script>
+
   import overall from './overall.vue'
   import detail from './detail.vue'
 
@@ -37,14 +38,8 @@
     name: 'main-part',
     data () {
       return {
-        dataFrom: '123',
+        dataFrom: '',
         dataTo: '',
-        cancelFirst: {
-          isShow: false
-        },
-        cancelSecond: {
-          isShow: false
-        }
       }
     },
     components: {
@@ -53,32 +48,25 @@
     },
     methods: {
       cancelValue: function (id) {
-        document.getElementById(id).value = '';
-        if (id = 'input-from') {
+        if (id == 'input-from') {
           this.dataFrom = '';
-          this.cancelFirst.isShow = false;
+          document.getElementById(id).value = '';
         }
-        if (id = 'input-to') {
+        if (id == 'input-to') {
           this.dataTo = '';
-          this.cancelSecond.isShow = false;
+          document.getElementById(id).value = '';
         }
       },
-      startInterval: function (num) {
+      startTimeout: function (num) {
         switch (num) {
           case 0:
-            setInterval(() => {
-              console.log(document.getElementById('input-from').value);
-             if (document.getElementById('input-from').value !== '') {
-               this.cancelFirst.isShow = true;
-             }
+            setTimeout(() => {
+              this.dataFrom = document.getElementById('input-from').value;
            },100);
            break;
          case 1:
-           setInterval(() => {
-             console.log(document.getElementById('input-from').value);
-             if (document.getElementById('input-to').value !== '') {
-               this.cancelSecond.isShow = true;
-             }
+           setTimeout(() => {
+             this.dataTo = document.getElementById('input-to').value
            },100);
            break;
        }
