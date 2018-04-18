@@ -140,8 +140,7 @@ export default {
   name: 'detail',
   props: {
     todo: {
-      type: String,
-      default: 1
+      type: String
     }
   },
   data () {
