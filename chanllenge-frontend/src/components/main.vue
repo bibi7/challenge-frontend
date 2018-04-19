@@ -72,6 +72,7 @@
        }
      },
       check: function () {
+        //todo:还需要更改，需要用props向子组件传而不是直接操作子组件的table
         const inputFrom = document.getElementById('input-from').value;
         const inputTo = document.getElementById('input-to').value;
         //空数组
