@@ -7,13 +7,13 @@
           <div>
             <!--暂不使用v-model来双向绑定，原因是因为在时间选择器插件更改input之后v-model并不会一起更新-->
             <input type="text" id="input-from" @blur="startTimeout(0)">
-            <i class="cancel" @click="cancelValue('input-from')" v-if="dataFrom"></i>
+            <i class="cancel" @click="cancelValue('input-from')" v-if="dateFrom"></i>
             <i class="triangle"></i>
           </div>
           <span>至</span>
           <div>
             <input type="text" id="input-to" @blur="startTimeout(1)">
-            <i class="cancel" @click="cancelValue('input-to')" v-if="dataTo"></i>
+            <i class="cancel" @click="cancelValue('input-to')" v-if="dateTo"></i>
             <i class="triangle"></i>
           </div>
         </div>
@@ -24,13 +24,13 @@
       </div>
     </div>
     <overall></overall>
-    <detail :fromTime="dataFrom" :endTime="dataTo"></detail>
+    <detail :fromTime="dateFrom" :endTime="dateTo"></detail>
   </div>
 </template>
 
 
 <script>
-
+  import {store} from '../../static/js/store'
   import overall from './overall.vue'
   import detail from './detail.vue'
 
@@ -38,8 +38,8 @@
     name: 'main-part',
     data () {
       return {
-        dataFrom: '',
-        dataTo: '',
+        dateFrom: '',
+        dateTo: '',
       }
     },
     components: {
@@ -49,11 +49,11 @@
     methods: {
       cancelValue: function (id) {
         if (id == 'input-from') {
-          this.dataFrom = '';
+          this.dateFrom = '';
           document.getElementById(id).value = '';
         }
         if (id == 'input-to') {
-          this.dataTo = '';
+          this.dateTo = '';
           document.getElementById(id).value = '';
         }
       },
@@ -61,74 +61,19 @@
         switch (num) {
           case 0:
             setTimeout(() => {
-              this.dataFrom = document.getElementById('input-from').value;
+              this.dateFrom = document.getElementById('input-from').value;
            },100);
            break;
-         case 1:
-           setTimeout(() => {
-             this.dataTo = document.getElementById('input-to').value
-           },100);
-           break;
-       }
-     },
-      check: function () {
-        //todo:还需要更改，需要用props向子组件传而不是直接操作子组件的table
-        const inputFrom = document.getElementById('input-from').value;
-        const inputTo = document.getElementById('input-to').value;
-        //空数组
-        let rangeArr = [];
-        //输入的时间有始有终的情况下
-        if (inputFrom !== '' && inputTo !== '') {
-          const millionSecondFrom = new Date(inputFrom).getTime();
-          const millionSecondTo = new Date(inputTo).getTime();
-          rangeArr = [];
-          //遍历数组找出符合条件的数组
-          detail.data().detail.forEach(function (item) {
-            let itemTime = new Date(item.tradeTime).getTime();
-            if (itemTime >= millionSecondFrom && itemTime <= millionSecondTo) {
-              rangeArr.push(item)
-            }
-          });
-          //改变显示
-          this.$children[1].detail = rangeArr
-
-
-
-          //只有开始时间的情况下
-        } else if (inputFrom !== '' && inputTo == '') {
-          const millionSecondFrom = new Date(inputFrom).getTime();
-          rangeArr = [];
-          detail.data().detail.forEach(function (item) {
-            let itemTime = new Date(item.tradeTime).getTime();
-            if (itemTime >= millionSecondFrom) {
-              rangeArr.push(item)
-            }
-          });
-          //改变显示
-          this.$children[1].detail = rangeArr
-
-
-
-          //只有结束时间的情况下
-        } else if (inputFrom == '' && inputTo !== '') {
-          const millionSecondTo = new Date(inputTo).getTime();
-          rangeArr = [];
-          detail.data().detail.forEach(function (item) {
-            let itemTime = new Date(item.tradeTime).getTime();
-            if (itemTime <= millionSecondTo) {
-              rangeArr.push(item)
-            }
-          });
-          //改变显示
-          this.$children[1].detail = rangeArr
-
-
-
-          //两边都为空，默认展示全部
-        } else if (inputFrom == '' && inputTo == '') {
-          this.$children[1].detail = detail.data().detail
+          case 1:
+            setTimeout(() => {
+              this.dateTo = document.getElementById('input-to').value;
+            },100);
+            break;
         }
-
+      },
+      check: function () {
+        store.commit('changeBefore', {'dateFrom': this.dateFrom, 'dateTo': this.dateTo});
+        console.log(this.$store);
       }
     }
   }

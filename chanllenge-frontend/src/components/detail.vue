@@ -3,7 +3,7 @@
     <table class="outer-table">
       <tr>
         <td>
-          <span>商户名称</span>
+          <span>{{fromD}}{{fromE}}</span>
         </td>
         <td>
           <span>交易日期</span>
@@ -45,7 +45,7 @@
           <span>操作</span>
         </td>
       </tr>
-      <tr v-for="(item, index) in detail">
+      <tr v-for="(item, index) in changeTable(detail)">
         <td colspan="13" class="in-td">
           <div class="control-hide" :class="item.isShow ? 'active' : ''">
             <table class="inner-table">
@@ -124,7 +124,7 @@
               <td>
                 <span>{{innerItem.moreAmountOfLiquidation | toFixed}}</span>
               </td>
-              <td>{{fromD}}{{fromE}}</td>
+              <td></td>
             </tr>
           </table>
           </div>
@@ -366,7 +366,49 @@ export default {
   methods: {
     clickToCheck: function (index, item) {
       item.isShow = !item.isShow;
-      console.log(this.fromD)
+    },
+    changeTable (detail) {
+      const filterArray = [];
+      const millionSecondFrom = new Date(this.fromDate).getTime();
+      const millionSecondTo = new Date(this.toDate).getTime();
+      if (this.fromDate !== '' && this.toDate !== '') {
+        detail.forEach(function (item) {
+          const trade = new Date(item.tradeTime).getTime();
+          if (trade >= millionSecondFrom && trade <= millionSecondTo) {
+            filterArray.push(item)
+          }
+        });
+        return filterArray;
+      }
+      if (this.fromDate !== '' && this.toDate == '') {
+        detail.forEach(function (item) {
+          const trade = new Date(item.tradeTime).getTime();
+          if (trade >= millionSecondFrom) {
+            filterArray.push(item)
+          }
+        });
+        return filterArray;
+      }
+      if (this.fromDate == '' && this.toDate !== '') {
+        detail.forEach(function (item) {
+          const trade = new Date(item.tradeTime).getTime();
+          if (trade <= millionSecondTo) {
+            filterArray.push(item)
+          }
+        });
+        return filterArray;
+      }
+      if (this.fromDate == '' && this.toDate == '') {
+        return detail
+      }
+    }
+  },
+  computed: {
+    fromDate () {
+      return this.$store.state.before
+    },
+    toDate () {
+      return this.$store.state.after
     }
   }
 }
