@@ -33,7 +33,6 @@
   import {store} from '../../static/js/store'
   import overall from './overall.vue'
   import detail from './detail.vue'
-
   export default {
     name: 'main-part',
     data () {
@@ -60,12 +59,12 @@
       startTimeout: function (num) {
         switch (num) {
           case 0:
-            setTimeout(() => {
+            setInterval(() => {
               this.dateFrom = document.getElementById('input-from').value;
            },100);
            break;
           case 1:
-            setTimeout(() => {
+            setInterval(() => {
               this.dateTo = document.getElementById('input-to').value;
             },100);
             break;
@@ -73,6 +72,7 @@
       },
       check: function () {
         store.commit('changeBefore', {'dateFrom': this.dateFrom, 'dateTo': this.dateTo});
+        console.log(this.$store.getters.done)
         console.log(this.$store);
       }
     }

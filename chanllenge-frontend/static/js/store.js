@@ -7,15 +7,20 @@ const store = new Vuex.Store({
   state: {
     before: '',
     after: '',
-    count: 0
+    count: []
   },
   mutations: {
-    changeBefore (state, ob) {
-      // state.count++;
-      // console.log(store.state.count);
-      console.log(ob);
-      state.before = ob.dateFrom;
-      state.after = ob.dateTo;
+    changeBefore (state, payload) {
+      state.count.push(1);
+      console.log(store.state.count);
+      console.log(payload);
+      state.before = payload.dateFrom;
+      state.after = payload.dateTo;
+    }
+  },
+  getters: {
+    done: state => {
+      return state.count.filter((count, index) => index > 3)
     }
   }
 });

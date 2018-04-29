@@ -140,10 +140,12 @@ export default {
   name: 'detail',
   props: {
     fromTime: {
-      type: String
+      type: String,
+      default: '',
     },
     endTime: {
-      type: String
+      type: String,
+      default: '',
     }
   },
   data () {
